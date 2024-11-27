@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
 
 
-function Login() {
+function SignUp() {
 
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
@@ -168,4 +168,4 @@ function Login() {
 }
 
 
-export default Login
+export default SignUp
