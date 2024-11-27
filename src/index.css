@@ -1,0 +1,18 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .socialIcon {
+        @apply flex items-center gap-2 justify-center mt-2 border border-gray-400 w-full mx-auto
+    }
+
+    .input {
+        @apply w-full mb-2 p-2 rounded-lg border border-gray-400 
+    }
+
+    .selectInput {
+        @apply w-full p-2.5 mb-2 rounded-lg border border-gray-400 bg-transparent mt-2
+    }
+}
