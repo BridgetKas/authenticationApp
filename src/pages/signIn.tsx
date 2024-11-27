@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import Social from './social'
+import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";

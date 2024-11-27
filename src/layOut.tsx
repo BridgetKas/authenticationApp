@@ -1,6 +1,6 @@
 import React from 'react'
 import {Outlet} from "react-router-dom"
-import TopBar from './topBar'
+import TopBar from './components/topBar'
 
 
 function LayOut() {
