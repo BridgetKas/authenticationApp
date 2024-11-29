@@ -24,12 +24,15 @@ function SignInPage() {
         }
     }
 
-    function handleSubmit() {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault()
       if (validPassword === password && validEmail === email) {
         setError('')
-        navigate("/dashboard"); 
+        navigate("/userdashboard"); 
     } else {
       setError("Invalid email or password. Please try again."); 
+      // setPassword(password)
+      // setEmail(email)
     }
     }
 
@@ -41,7 +44,7 @@ function SignInPage() {
       </div>
       <div className='w-[80%] mx-auto mt-[40px] sm:self-stretch sm:w-[50%] sm:m-0 }'>
             
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <h1 className="text-center font-semibold text-2xl mb-[15px]">Sign in</h1>
           <input 
             type ='email' 
