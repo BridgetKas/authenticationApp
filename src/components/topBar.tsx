@@ -1,5 +1,5 @@
-import React from 'react'
 import { SiWelcometothejungle } from "react-icons/si";
+import { MdMenu } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import Button from './button';
 
@@ -27,7 +27,7 @@ function TopBar() {
             <SiWelcometothejungle />
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="hidden sm:flex sm:items-center sm:gap-2.5">
             {
                 mainbar.map(item =>(
                     <div key={item.id} >
@@ -37,6 +37,9 @@ function TopBar() {
                     </div>
                 ))
             }
+        </div>
+        <div className="block text-4xl items-center sm:hidden">
+            <MdMenu />
         </div>
     
     </div>
