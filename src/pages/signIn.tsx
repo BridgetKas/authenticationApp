@@ -20,11 +20,11 @@ function SignInPage() {
 
   return (
     <>
-    <div className=" sm:flex sm:flex-row sm:content-between sm:flex-wrap sm:w-[80%] sm:mx-auto sm:mt-8 sm:gap-[26px]">
+    <div className=" sm:flex sm:flex-row sm:w-[80%] sm:mx-auto sm:mt-8 sm:gap-[26px]">
       <div className="hidden sm:w-[45%] sm:block sm:self-center">
         <img src='/greenChair.png'/>
       </div>
-      <div className='w-[80%] mx-auto mt-[40px] sm:self-stretch sm:w-[50%] sm:m-0 sm:w-[95%}'>
+      <div className='w-[80%] mx-auto mt-[40px] sm:self-stretch sm:w-[50%] sm:m-0 }'>
             
         <form >
           <h1 className="text-center font-semibold text-2xl mb-[15px]">Sign in</h1>
