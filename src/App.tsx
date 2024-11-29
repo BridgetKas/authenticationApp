@@ -2,6 +2,7 @@ import LayOut from './layOut';
 import SignUp from './pages/signup'
 import { createBrowserRouter,RouterProvider} from "react-router-dom";
 import SignInPage from './pages/signIn';
+import UserDashBoard from './components/useDashBoard';
 
 
 const router = createBrowserRouter([
@@ -19,7 +20,10 @@ const router = createBrowserRouter([
         element:<SignInPage/>
       },
     ]
-  },
+  },{
+    path:'/userdashboard',
+    element:<UserDashBoard/>
+  }
 ])
 
 
