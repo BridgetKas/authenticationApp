@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
@@ -7,8 +8,13 @@ import { FaApple, FaTwitter  } from "react-icons/fa";
 
 function SignInPage() {
 
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
+    const [email,setEmail] = useState('');
+    const [password,setPassword] = useState('');
+    const [error,setError] = useState('')
+    const navigate = useNavigate();
+
+    const validEmail = 'bizzyB@gmail.com';
+    const validPassword = 'nevergiveup';
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
         if (e.target.name === 'email'){
@@ -16,7 +22,16 @@ function SignInPage() {
         }else if (e.target.name === 'password') {
           setPassword( e.target.value)
         }
-      }
+    }
+
+    function handleSubmit() {
+      if (validPassword === password && validEmail === email) {
+        setError('')
+        navigate("/dashboard"); 
+    } else {
+      setError("Invalid email or password. Please try again."); 
+    }
+    }
 
   return (
     <>
@@ -26,7 +41,7 @@ function SignInPage() {
       </div>
       <div className='w-[80%] mx-auto mt-[40px] sm:self-stretch sm:w-[50%] sm:m-0 }'>
             
-        <form >
+        <form onSubmit={handleSubmit}>
           <h1 className="text-center font-semibold text-2xl mb-[15px]">Sign in</h1>
           <input 
             type ='email' 
@@ -56,6 +71,7 @@ function SignInPage() {
             type='submit' 
             className="w-full bg-black text-white p-2.5 rounded-lg mb-1">Sign in
           </button>
+          {error && <p className="text-center  text-[16px] text-red-600">{error}</p>}
         </form>
         <div className="w-full  text-center my-3">.....................or.......................</div>
         <div className="text-center my-3">
