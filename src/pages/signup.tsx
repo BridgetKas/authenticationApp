@@ -43,7 +43,6 @@ function SignUp() {
       setError(validatePassword(userData.password) as string)
       return
     }
- 
     sessionStorage.setItem("userData", JSON.stringify(userData));
     alert("Data stored successfully!");
     setUserData({ email: "", password: "", phoneNumber: "" });

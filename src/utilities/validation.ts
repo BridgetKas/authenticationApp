@@ -15,3 +15,8 @@ export const validateEmail = (email:string) => {
     if (!phoneRegex.test(phone)) return "Phone number must be 10 digits.";
     return null;
   };
+
+
+  export const saveSession = (key:string,value:string) =>{
+    return sessionStorage.setItem(key,value)
+  }
