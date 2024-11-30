@@ -53,10 +53,10 @@ function SignUp() {
   return (
     <>
       <div  className=" sm:flex sm:flex-row  sm:w-[80%] sm:mx-auto sm:mt-8 sm:gap-[26px]">
-        <div className="hidden sm:w-[45%] sm:block sm:self-center" >
+        <div className="hidden md:w-[45%] md:block md:self-center" >
           <img src='/greenChair.png'/>
         </div>
-        <div className='w-[80%] mx-auto mt-[40px] sm:self-stretch sm:w-[50%] sm:m-0 }'>
+        <div className='w-[80%] mx-auto mt-[40px] md:self-stretch md:w-[50%] md:m-0 }'>
           <form  onSubmit={(e) => handleSubmit(e)} >
             <h1 className="text-center font-semibold text-2xl mb-[15px]">Create an account</h1>
             <select className="selectInput" value={country} onChange={(event) => handleCountryChange(event)} >
