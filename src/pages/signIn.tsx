@@ -1,10 +1,12 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
+import CryptoJS from 'crypto-js';
 import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
+import { EMAIL_KEY, getSession, PASSWORD_KEY, saveSession, validEmail, validPassword } from '../utilities/validation';
 
 function SignInPage() {
 
@@ -13,8 +15,14 @@ function SignInPage() {
     const [error,setError] = useState('')
     const navigate = useNavigate();
 
-    const validEmail = 'bizzyB@gmail.com';
-    const validPassword = 'nevergiveup';
+   useEffect(()=>{
+      const sessionEmail = getSession(EMAIL_KEY)
+      const sessionPassword = getSession(PASSWORD_KEY)
+      
+      if (sessionEmail === validEmail && sessionPassword === validPassword) {
+        navigate("/userdashboard")
+      }
+    },[navigate,email,password])
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
         if (e.target.name === 'email'){
@@ -24,16 +32,26 @@ function SignInPage() {
         }
     }
 
+    console.log("env",import.meta.env.VITE_SOME_KEY)
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault()
       if (validPassword === password && validEmail === email) {
         setError('')
+
+        const encryptPassword = (password:string) => {
+          const secretKey = 'your_secret_key'; 
+          const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
+          return encrypted;
+        };
+
+        const encryptedPassword = encryptPassword(password);
+        console.log('Encrypted Password:', encryptedPassword);
+        saveSession(PASSWORD_KEY,password)
+        saveSession(EMAIL_KEY,email)
         navigate("/userdashboard"); 
-    } else {
-      setError("Invalid email or password. Please try again."); 
-      // setPassword(password)
-      // setEmail(email)
-    }
+      } else {
+        setError("Invalid email or password. Please try again."); 
+      }
     }
 
   return (
