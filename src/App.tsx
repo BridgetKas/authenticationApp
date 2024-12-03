@@ -2,7 +2,7 @@ import LayOut from './layOut';
 import SignUp from './pages/signup'
 import { createBrowserRouter,RouterProvider} from "react-router-dom";
 import SignInPage from './pages/signIn';
-import UserDashBoard from './components/useDashBoard';
+import UserDashBoard from './pages/useDashBoard';
 
 
 const router = createBrowserRouter([
@@ -24,7 +24,8 @@ const router = createBrowserRouter([
     path:'/userdashboard',
     element:<UserDashBoard/>,
     errorElement:<h1>Try again</h1>
-  }
+  },
+  
 ])
 
 

@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-import CryptoJS from 'crypto-js';
 import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
-import { EMAIL_KEY, getSession, PASSWORD_KEY, saveSession, validEmail, validPassword } from '../utilities/validation';
+import { EMAIL_KEY, encryptPassword, getSession, PASSWORD_KEY, saveSession, validEmail, validPassword } from '../utilities/validation';
 
 function SignInPage() {
 
@@ -19,6 +18,7 @@ function SignInPage() {
       const sessionEmail = getSession(EMAIL_KEY)
       const sessionPassword = getSession(PASSWORD_KEY)
       
+      // if the email and password are equal keep the user on the dashboard
       if (sessionEmail === validEmail && sessionPassword === validPassword) {
         navigate("/userdashboard")
       }
@@ -32,21 +32,12 @@ function SignInPage() {
         }
     }
 
-    console.log("env",import.meta.env.VITE_SOME_KEY)
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault()
       if (validPassword === password && validEmail === email) {
         setError('')
-
-        const encryptPassword = (password:string) => {
-          const secretKey = 'your_secret_key'; 
-          const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
-          return encrypted;
-        };
-
         const encryptedPassword = encryptPassword(password);
-        console.log('Encrypted Password:', encryptedPassword);
-        saveSession(PASSWORD_KEY,password)
+        saveSession(PASSWORD_KEY,encryptedPassword)
         saveSession(EMAIL_KEY,email)
         navigate("/userdashboard"); 
       } else {

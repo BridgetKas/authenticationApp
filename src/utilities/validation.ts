@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js';
 
 export const PASSWORD_KEY = 'password'
 export const EMAIL_KEY ='email'
@@ -34,3 +35,15 @@ export const getSession = (key:string) =>{
 
 
 
+export const encryptPassword = (password:string) => {
+  const secretKey = import.meta.env.VITE_SECRET_KEY; 
+  const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
+  return encrypted;
+};
+
+export const dencryptPassword = (encryptedPassword:string) => {
+  const secretKey = import.meta.env.VITE_SECRET_KEY; 
+  const bytes = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
+  const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+  return originalPassword;
+}
