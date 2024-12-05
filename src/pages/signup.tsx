@@ -6,6 +6,7 @@ import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
 import {validateEmail,validatePassword,validatePhone } from '../utilities/validation'
+import {db} from '../../db'
 
 
 function SignUp() {
@@ -14,7 +15,7 @@ function SignUp() {
   const [userData, setUserData] = useState({
     email:'',
     password:'',
-    phoneNumber:''
+    phoneNumber:'',
   })
 
   function handleCountryChange(e:React.ChangeEvent<HTMLSelectElement>) {
@@ -26,7 +27,7 @@ function SignUp() {
     setUserData({ ...userData, [name]: value });
   };
  
-  function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
     if(validatePhone(userData.phoneNumber)) {
@@ -43,9 +44,17 @@ function SignUp() {
       setError(validatePassword(userData.password) as string)
       return
     }
+
+    try {
+      // Add the new friend!
+      const id = await db.User.add(userData);
+      console.log('id', id)
+    } catch (error) {
+      setError(`Failed to add ${userData.email}: ${error}`);
+    }
     sessionStorage.setItem("userData", JSON.stringify(userData));
     alert("Data stored successfully!");
-    setUserData({ email: "", password: "", phoneNumber: "" });
+    setUserData({ email: "", password: "", phoneNumber: ""});
     setError('')
   }
 
