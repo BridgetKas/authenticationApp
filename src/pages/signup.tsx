@@ -5,9 +5,9 @@ import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
-import {validateEmail,validatePassword,validatePhone } from '../utilities/validation'
+import { useNavigate } from "react-router-dom";
+import {validateEmail,validatePassword,validatePhone ,encryptPassword} from '../utilities/validation'
 import {db} from '../../db'
-
 
 function SignUp() {
   const [country,setCountry] = useState('country 1')
@@ -17,6 +17,7 @@ function SignUp() {
     password:'',
     phoneNumber:'',
   })
+  const navigate = useNavigate();
 
   function handleCountryChange(e:React.ChangeEvent<HTMLSelectElement>) {
     setCountry(e.target.value)
@@ -45,6 +46,9 @@ function SignUp() {
       return
     }
 
+    const encryptedPassword = encryptPassword(userData.password);
+    setUserData({...userData, password:encryptedPassword})
+
     try {
       // Add the new friend!
       const id = await db.User.add(userData);
@@ -52,10 +56,10 @@ function SignUp() {
     } catch (error) {
       setError(`Failed to add ${userData.email}: ${error}`);
     }
-    sessionStorage.setItem("userData", JSON.stringify(userData));
     alert("Data stored successfully!");
     setUserData({ email: "", password: "", phoneNumber: ""});
     setError('')
+    navigate('./logIn')
   }
 
   return (
