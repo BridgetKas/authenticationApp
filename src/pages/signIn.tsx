@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState, useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Social from '../components/social'
 import { IoMdEye ,} from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaTwitter  } from "react-icons/fa";
-import { EMAIL_KEY, encryptPassword, getSession, PASSWORD_KEY, saveSession, validEmail, validPassword } from '../utilities/validation';
+import { dencryptPassword,  USER_KEY, getSession, saveSession, } from '../utilities/validation';
+import {db} from '../../db'
 
 function SignInPage() {
 
@@ -14,15 +15,15 @@ function SignInPage() {
     const [error,setError] = useState('')
     const navigate = useNavigate();
 
-   useEffect(()=>{
-      const sessionEmail = getSession(EMAIL_KEY)
-      const sessionPassword = getSession(PASSWORD_KEY)
-      
-      // if the email and password are equal keep the user on the dashboard
-      if (sessionEmail === validEmail && sessionPassword === validPassword) {
+  // Check whether the isLoggedIn flag is equal to true and redirect the user to the dashboard
+    useEffect(() => {
+      const isLogged = getSession(USER_KEY) as string
+      const logginDetails = JSON.parse(isLogged)
+
+      if(logginDetails !== null && logginDetails.isLoggedIn){
         navigate("/userdashboard")
       }
-    },[navigate,email,password])
+    },[navigate])
 
     function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
         if (e.target.name === 'email'){
@@ -32,15 +33,20 @@ function SignInPage() {
         }
     }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault()
-      if (validPassword === password && validEmail === email) {
-        setError('')
-        const encryptedPassword = encryptPassword(password);
-        saveSession(PASSWORD_KEY,encryptedPassword)
-        saveSession(EMAIL_KEY,email)
-        navigate("/userdashboard"); 
-      } else {
+      try {
+        const userEmailAuthentication = await db.User
+        .where("email").equalsIgnoreCase(email)
+        .first() 
+
+        if(userEmailAuthentication && dencryptPassword(userEmailAuthentication.password) === password) {
+          saveSession(USER_KEY,{email:email,isLoggedIn:true})
+          navigate("/userdashboard")
+        }
+        setError("Invalid email or password.");
+      }
+      catch {
         setError("Invalid email or password. Please try again."); 
       }
     }

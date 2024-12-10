@@ -46,22 +46,26 @@ function SignUp() {
       return
     }
 
-    const encryptedPassword = encryptPassword(userData.password);
-    setUserData({...userData, password:encryptedPassword})
-
     try {
+      const encryptedPassword = encryptPassword(userData.password);
+      const updatedUserData = { ...userData, password: encryptedPassword ,country:country};
       // Add the new friend!
-      const id = await db.User.add(userData);
+      const id = await db.User.add(updatedUserData);
       console.log('id', id)
-    } catch (error) {
-      setError(`Failed to add ${userData.email}: ${error}`);
+      alert("Data stored successfully!");
+      setUserData({ email: "", password: "", phoneNumber: ""});
+      setError('')
+      navigate('./logIn')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error:any) {
+       if(error.name === 'ConstraintError'){
+        setError(`Failed to add ${userData.email}: Account already exists`)
+       }else {
+        setError('Invalid email or password.Please try again')
+      }
     }
-    alert("Data stored successfully!");
-    setUserData({ email: "", password: "", phoneNumber: ""});
-    setError('')
-    navigate('./logIn')
   }
-
+  
   return (
     <>
       <div  className=" sm:flex sm:flex-row  sm:w-[80%] sm:mx-auto sm:mt-8 sm:gap-[26px]">

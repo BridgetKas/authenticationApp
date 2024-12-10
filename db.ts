@@ -4,6 +4,7 @@ interface User {
   email: string;
   password: string;
   phoneNumber:string;
+  country:string;
 }
 
 const db = new Dexie('userDatabase') as Dexie & {User: EntityTable<User,
@@ -12,7 +13,7 @@ const db = new Dexie('userDatabase') as Dexie & {User: EntityTable<User,
 };
 
 db.version(1).stores({
-    User: '++id, email, password,phoneNumber' // primary key "id" (for the runtime!)
+    User: '++id, &email, password,phoneNumber' // primary key "id" (for the runtime!)
 });
   
 export type { User };

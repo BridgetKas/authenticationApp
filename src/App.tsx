@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     path:'/userdashboard',
     element:<UserDashBoard/>,
     errorElement:<h1>Try again</h1>
-  },
+  }, 
   
 ])
 
