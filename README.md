@@ -8,7 +8,7 @@ An app that enables authentication
 An app that enables users to safely access their accounts . This is designed for those that want to safe guard their accounts.
 ## 🌐 Deployed version
 
-https://lime-variable.vercel.app/
+authentication-app-lovat.vercel.app
 
 ## 🛠️ Tech Stack
 
