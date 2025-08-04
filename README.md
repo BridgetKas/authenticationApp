@@ -8,7 +8,7 @@ An app that enables authentication
 An app that enables users to safely access their accounts . This is designed for those that want to safe guard their accounts.
 ## 🌐 Deployed version
 
-authentication-app-lovat.vercel.app
+https://authentication-app-ten-teal.vercel.app/
 
 ## 🛠️ Tech Stack
 
